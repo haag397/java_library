@@ -9,4 +9,9 @@ public class AppUserController {
     public String test() {
         return "test";
     }
+
+    @GetMapping("/testa")
+    public String testa() {
+        return "testa";
+    }
 }

@@ -18,15 +18,10 @@ public class AppUserService implements CreatableUserService {
     public List<AppUser> getAllUsers(){
         return appUserRepository.findAll();
     }
+
     @Override
     public AppUser addAppUser(AppUser appUser) {
         return appUserRepository.save(appUser);
-    }
-
-
-    @Override
-    public Optional<AppUser> findById(Long id) {
-        return appUserRepository.findById(id);
     }
 
     @Override

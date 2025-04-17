@@ -1,24 +1,22 @@
 package com.library.library.controller;
 
-import com.library.library.model.Book;
-import com.library.library.service.book.BookService;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/api/book")
 public class BookController {
 
-    private final BookService bookService;
-
-    public BookController(BookService bookService) {
-        this.bookService = bookService;
+    @GetMapping
+    public String first(){
+        return "first";
     }
 
     @PostMapping
-    public void addBook(@RequestBody Book book) {
-        bookService.createBook(book);
+    public String second(){
+        return "second";
     }
-}
 
+}
