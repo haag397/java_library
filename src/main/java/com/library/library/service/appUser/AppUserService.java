@@ -1,8 +1,10 @@
 package com.library.library.service.appUser;
 
+import com.library.library.dto.AppUserDTO;
+import com.library.library.mapper.AppUserMapper;
 import com.library.library.model.AppUser;
 import com.library.library.repository.AppUserRepository;
-import lombok.ToString;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,9 +14,12 @@ import java.util.Optional;
 public class AppUserService implements CreatableUserService {
 
     private final AppUserRepository appUserRepository;
+    private final AppUserMapper appUserMapper;
 
-    public AppUserService(AppUserRepository appUserRepository) {
+
+    public AppUserService(AppUserRepository appUserRepository, AppUserMapper appUserMapper) {
         this.appUserRepository = appUserRepository;
+        this.appUserMapper = appUserMapper;
     }
 
     public List<AppUser> getAllUsers(){
@@ -25,6 +30,12 @@ public class AppUserService implements CreatableUserService {
     @Transactional
     public AppUser addAppUser(AppUser appUser) {
         return appUserRepository.save(appUser);
+    }
+
+    public AppUserDTO createUser(AppUserDTO userDTO) {
+        AppUser appUser = appUserMapper.toEntity(userDTO);
+        AppUser savedUser = appUserRepository.save(appUser);
+        return appUserMapper.toDto(savedUser);
     }
 
     @Override
