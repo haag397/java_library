@@ -2,7 +2,9 @@ package com.library.library.service.appUser;
 
 import com.library.library.model.AppUser;
 import com.library.library.repository.AppUserRepository;
+import lombok.ToString;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +22,7 @@ public class AppUserService implements CreatableUserService {
     }
 
     @Override
+    @Transactional
     public AppUser addAppUser(AppUser appUser) {
         return appUserRepository.save(appUser);
     }

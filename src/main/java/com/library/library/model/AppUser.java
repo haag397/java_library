@@ -65,4 +65,17 @@ public class AppUser {
         this.email = email;
         this.mobile = mobile;
     }
+
+    @Override
+    public String toString() {
+        return "AppUser{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", books=" + books +
+                '}';
+    }
 }
