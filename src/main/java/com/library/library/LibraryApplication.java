@@ -12,10 +12,6 @@ public class LibraryApplication {
         SpringApplication.run(LibraryApplication.class, args);
     }
 
-    @Bean
-    public CommandLineRunner commandLineRunner(String[] args) {
-        return runner -> {
-            System.out.println("Welcome to Library Application");
-        };
+
     }
-}
+
