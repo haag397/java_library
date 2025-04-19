@@ -1,6 +1,7 @@
 package com.library.library.controller;
 
 import com.library.library.dto.AppUserDTO;
+import com.library.library.exception.UserNotFoundException;
 import com.library.library.model.AppUser;
 import com.library.library.service.appUser.AppUserService;
 import org.springframework.http.HttpStatus;
@@ -27,9 +28,15 @@ public class AppUserController {
         return "testa";
     }
 
-    @PostMapping
+    @PostMapping(("/create"))
     public ResponseEntity<AppUserDTO> addUser(@RequestBody AppUserDTO userDTO) {
         AppUserDTO savedUser = appUserService.createUser(userDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
+    }
+
+    @PostMapping("/email")
+    public AppUser findByEmail(@RequestBody String email) {
+        System.out.println(email);
+        return appUserService.findByEmail(email).orElseThrow(() -> new UserNotFoundException("no user found with email " + email));
     }
 }

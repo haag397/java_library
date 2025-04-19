@@ -1,8 +1,8 @@
 package com.library.library.exception;
 
-public class BookNotFoundException {
+public class BookNotFoundException extends RuntimeException {
 
-    public BookNotFoundException() {
+    public BookNotFoundException(String s) {
         super();
     }
 
