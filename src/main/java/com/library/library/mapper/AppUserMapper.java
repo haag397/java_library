@@ -15,6 +15,7 @@ public class AppUserMapper {
         user.setUserName(dto.getUserName());
         user.setEmail(dto.getEmail());
         user.setMobile(dto.getMobile());
+        user.setPassword(dto.getPassword());
         // Handle Book mapping if needed
         return user;
     }
@@ -27,6 +28,7 @@ public class AppUserMapper {
         dto.setUserName(user.getUserName());
         dto.setEmail(user.getEmail());
         dto.setMobile(user.getMobile());
+        user.setPassword(dto.getPassword());
         // Handle BookDTO mapping if needed
         return dto;
     }

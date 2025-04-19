@@ -18,12 +18,12 @@ management:
   info:
     env:
       enabled: true
-logging:
-  level:
-    root: debug
-    org:
-      springframework: debug
-      hibernate: warn
+#logging:
+#  level:
+#    root: info
+#    org:
+#      springframework: info
+#      hibernate: debug
 server:
   port: 8080
 debug: true

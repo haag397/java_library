@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/user")
 public class AppUserController {
 
-    private AppUserService appUserService;
+    private final AppUserService appUserService;
+
+    public AppUserController(AppUserService appUserService) {
+        this.appUserService = appUserService;
+    }
 
     @GetMapping("/test")
     public String test() {
