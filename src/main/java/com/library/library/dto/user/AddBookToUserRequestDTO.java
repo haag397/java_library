@@ -1,5 +1,6 @@
 package com.library.library.dto.user;
 
+import com.library.library.dto.book.BookRequestDTO;
 import com.library.library.dto.book.BookResponseDTO;
 import lombok.*;
 
@@ -10,12 +11,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserResponseDTO {
-    private Long id;
+public class AddBookToUserRequestDTO {
     private String email;
-    private String firstName;
-    private String lastName;
     private String mobile;
     private String username;
-    private List<BookResponseDTO> books;
+    private List<BookRequestDTO> books;
 }

@@ -1,5 +1,6 @@
 package com.library.library.controller;
 
+import com.library.library.dto.book.BookRequestDTO;
 import com.library.library.dto.user.AppUserDTO;
 import com.library.library.exception.UserNotFoundException;
 import com.library.library.model.AppUser;
@@ -39,4 +40,7 @@ public class AppUserController {
         System.out.println(email);
         return appUserService.findByEmail(email).orElseThrow(() -> new UserNotFoundException("no user found with email " + email));
     }
+
+    @PostMapping
+    public ResponseEntity<AppUserDTO> addBook(@RequestBody BookRequestDTO bookDTO) {}
 }

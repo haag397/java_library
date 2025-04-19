@@ -1,6 +1,13 @@
 package com.library.library.dto.user;
 
-public class UserRequestDTO {
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class UserCreationRequestDTO {
     private String email;
     private String firstName;
     private String lastName;
