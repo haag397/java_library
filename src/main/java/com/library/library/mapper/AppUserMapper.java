@@ -1,6 +1,6 @@
 package com.library.library.mapper;
 
-import com.library.library.dto.AppUserDTO;
+import com.library.library.dto.user.AppUserDTO;
 import com.library.library.model.AppUser;
 import org.springframework.stereotype.Component;
 

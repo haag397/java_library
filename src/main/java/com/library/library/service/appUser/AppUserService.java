@@ -1,6 +1,6 @@
 package com.library.library.service.appUser;
 
-import com.library.library.dto.AppUserDTO;
+import com.library.library.dto.user.AppUserDTO;
 import com.library.library.mapper.AppUserMapper;
 import com.library.library.model.AppUser;
 import com.library.library.repository.AppUserRepository;

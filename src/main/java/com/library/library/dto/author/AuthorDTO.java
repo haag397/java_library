@@ -1,4 +1,4 @@
-package com.library.library.dto;
+package com.library.library.dto.author;
 
 public class AuthorDTO {
     private Long id;

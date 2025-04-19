@@ -1,6 +1,6 @@
 package com.library.library.controller;
 
-import com.library.library.dto.AppUserDTO;
+import com.library.library.dto.user.AppUserDTO;
 import com.library.library.exception.UserNotFoundException;
 import com.library.library.model.AppUser;
 import com.library.library.service.appUser.AppUserService;

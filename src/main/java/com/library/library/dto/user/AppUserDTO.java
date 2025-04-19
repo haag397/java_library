@@ -1,5 +1,6 @@
-package com.library.library.dto;
+package com.library.library.dto.user;
 
+import com.library.library.dto.book.BookDTO;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -28,3 +29,4 @@ public class AppUserDTO {
     private String password;
     private List<BookDTO> books;
 }
+

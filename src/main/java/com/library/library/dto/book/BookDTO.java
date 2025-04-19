@@ -1,4 +1,7 @@
-package com.library.library.dto;
+package com.library.library.dto.book;
+
+import com.library.library.dto.author.AuthorDTO;
+import com.library.library.dto.category.CategoryDto;
 
 import java.math.BigDecimal;
 import java.util.List;
