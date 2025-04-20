@@ -2,6 +2,9 @@ package com.library.library.controller;
 
 import com.library.library.dto.book.BookRequestDTO;
 import com.library.library.dto.user.AppUserDTO;
+import com.library.library.dto.user.AppUserMapper;
+import com.library.library.dto.user.UserCreationRequestDTO;
+import com.library.library.dto.user.UserResponseDTO;
 import com.library.library.exception.UserNotFoundException;
 import com.library.library.model.AppUser;
 import com.library.library.service.appUser.AppUserService;
@@ -14,9 +17,10 @@ import org.springframework.web.bind.annotation.*;
 public class AppUserController {
 
     private final AppUserService appUserService;
-
-    public AppUserController(AppUserService appUserService) {
+    private final AppUserMapper appUserMapper;
+    public AppUserController(AppUserService appUserService, AppUserMapper appUserMapper) {
         this.appUserService = appUserService;
+        this.appUserMapper = appUserMapper;
     }
 
     @GetMapping("/test")
@@ -30,17 +34,25 @@ public class AppUserController {
     }
 
     @PostMapping(("/create"))
-    public ResponseEntity<AppUserDTO> addUser(@RequestBody AppUserDTO userDTO) {
-        AppUserDTO savedUser = appUserService.createUser(userDTO);
+    public ResponseEntity<UserResponseDTO> addUser(@RequestBody UserCreationRequestDTO userCreationRequestDTO) {
+        UserResponseDTO savedUser= appUserService.createUser(userCreationRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
-    @PostMapping("/email")
+    @GetMapping("/username")
+    public ResponseEntity<UserResponseDTO> findByUserName(@RequestParam String userName) {
+        AppUser user = appUserService.findByUserName(userName).
+                orElseThrow(() -> new UserNotFoundException("user not found with username" + userName));
+       UserResponseDTO responseDTO = appUserMapper.toUserResponseDTO(user);
+        return ResponseEntity.ok(responseDTO);
+    }
+
+    @GetMapping("/email")
     public AppUser findByEmail(@RequestBody String email) {
-        System.out.println(email);
-        return appUserService.findByEmail(email).orElseThrow(() -> new UserNotFoundException("no user found with email " + email));
+        return appUserService.findByEmail(email).
+                orElseThrow(() -> new UserNotFoundException("user not found with email " + email));
     }
 
     @PostMapping
-    public ResponseEntity<AppUserDTO> addBook(@RequestBody BookRequestDTO bookDTO) {}
+    public ResponseEntity<AppUserDTO> addBook(@RequestBody BookRequestDTO bookDTO) {return null;}
 }

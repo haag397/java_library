@@ -1,6 +1,7 @@
 package com.library.library.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import static jakarta.persistence.GenerationType.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Author {
     @Id
     @SequenceGenerator(
@@ -36,12 +38,6 @@ public class Author {
 
     @ManyToMany(mappedBy = "authors")
     private List<Book> books = new ArrayList<>();
-
-    public Author(String firstName, String lastName, List<Book> books) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.books = books;
-    }
 
     @Override
     public String toString() {

@@ -1,7 +1,8 @@
 package com.library.library.service.appUser;
 
-import com.library.library.dto.user.AppUserDTO;
-import com.library.library.mapper.AppUserMapper;
+import com.library.library.dto.user.AppUserMapper;
+import com.library.library.dto.user.UserCreationRequestDTO;
+import com.library.library.dto.user.UserResponseDTO;
 import com.library.library.model.AppUser;
 import com.library.library.repository.AppUserRepository;
 
@@ -16,7 +17,6 @@ public class AppUserService implements CreatableUserService {
     private final AppUserRepository appUserRepository;
     private final AppUserMapper appUserMapper;
 
-
     public AppUserService(AppUserRepository appUserRepository, AppUserMapper appUserMapper) {
         this.appUserRepository = appUserRepository;
         this.appUserMapper = appUserMapper;
@@ -28,15 +28,13 @@ public class AppUserService implements CreatableUserService {
 
     @Override
     @Transactional
-    public AppUser addAppUser(AppUser appUser) {
-        return appUserRepository.save(appUser);
+    public UserResponseDTO createUser(UserCreationRequestDTO userCreationRequestDTO) {
+        AppUser appUser= appUserMapper.toEntity(userCreationRequestDTO);
+        AppUser savedUser = appUserRepository.save(appUser);        // Save entity
+        return appUserMapper.toUserResponseDTO(savedUser);
+//        appUserRepository.save(appUser);
     }
 
-    public AppUserDTO createUser(AppUserDTO userDTO) {
-        AppUser appUser = appUserMapper.toEntity(userDTO);
-        AppUser savedUser = appUserRepository.save(appUser);
-        return appUserMapper.toDto(savedUser);
-    }
 
     @Override
     public Optional<AppUser> findByUserName(String userName) {
