@@ -1,5 +1,6 @@
 package com.library.library.dto.user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Getter
@@ -13,6 +14,5 @@ public class UserCreationRequestDTO {
     private String lastName;
     private String mobile;
     private String password;
-    private String username;
 }
 

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface CreatableUserService {
     UserResponseDTO createUser(UserCreationRequestDTO userCreationRequestDTO);
-    Optional<AppUser> findByUserName(String userName);
+//    Optional<AppUser> findByUserName(String userName);
     Optional<AppUser> findByEmail(String email);
 
 }

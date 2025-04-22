@@ -1,7 +1,7 @@
 package com.library.library.dto.user;
 
-import com.library.library.dto.book.BookRequestDTO;
-import com.library.library.dto.book.BookResponseDTO;
+//import com.library.library.dto.book.BookRequestDTO;
+//import com.library.library.dto.book.BookResponseDTO;
 import lombok.*;
 
 import java.util.List;
@@ -14,6 +14,5 @@ import java.util.List;
 public class AddBookToUserRequestDTO {
     private String email;
     private String mobile;
-    private String username;
-    private List<BookRequestDTO> books;
+//    private List<BookRequestDTO> books;
 }

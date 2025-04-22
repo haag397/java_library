@@ -36,10 +36,10 @@ public class AppUserService implements CreatableUserService {
     }
 
 
-    @Override
-    public Optional<AppUser> findByUserName(String userName) {
-        return appUserRepository.findByUserName(userName);
-    }
+//    @Override
+//    public Optional<AppUser> findByUserName(String userName) {
+//        return appUserRepository.findByUserName(userName);
+//    }
 
     @Override
     public Optional<AppUser> findByEmail(String email) {
