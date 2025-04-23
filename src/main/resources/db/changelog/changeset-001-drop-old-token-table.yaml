@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: drop-old-table
+      author: you
+      changes:
+        - dropTable:
+            tableName: token

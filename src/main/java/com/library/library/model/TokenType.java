@@ -1,5 +1,5 @@
-package com.library.library.model;
-
-public enum TokenType {
-    BEARER,
-}
+//package com.library.library.model;
+//
+//public enum TokenType {
+//    BEARER,
+//}
