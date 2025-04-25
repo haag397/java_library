@@ -1,5 +1,7 @@
-package com.library.library.auth;
+package com.library.library.dto.auth;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,8 +11,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
-
+public class AuthenticationRequestDTO {
+    @NotBlank
+    @Email
     private String email;
+    @NotBlank
     String password;
 }

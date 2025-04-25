@@ -45,11 +45,11 @@ public class Book {
 
     @ManyToOne()
     @JoinColumn(
-            name = "app_user_id",
+            name = "user_id",
             referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "app_user_id_fk")
+            foreignKey = @ForeignKey(name = "user_id_fk")
     )
-    private AppUser appUser;
+    private User users;
 
     @ManyToMany()
     @JoinTable(
@@ -69,12 +69,12 @@ public class Book {
     )
     private List<Category> categories = new ArrayList<>();
 
-    public Book(String bookTitle, String publisher, BigDecimal price, int quantity, AppUser appUser, List<Author> authors, List<Category> categories) {
+    public Book(String bookTitle, String publisher, BigDecimal price, int quantity, User users, List<Author> authors, List<Category> categories) {
         this.bookTitle = bookTitle;
         this.publisher = publisher;
         this.price = price;
         this.quantity = quantity;
-        this.appUser = appUser;
+        this.users = users;
         this.authors = authors;
         this.categories = categories;
     }

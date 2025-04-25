@@ -30,6 +30,11 @@
         <java.version>21</java.version>
     </properties>
     <dependencies>
+        <!-- Spring Boot Starters (grouped by functionality) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -40,19 +45,44 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <!-- Spring Boot Test & Development -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional> <!-- Added optional as best practice -->
+        </dependency>
+
+        <!-- Database & Migration -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>4.29.0</version>
         </dependency>
+
+        <!-- Security (JWT) -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -62,36 +92,28 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
             <version>0.12.5</version>
+            <scope>runtime</scope> <!-- Added scope as best practice -->
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
             <version>0.12.5</version>
+            <scope>runtime</scope> <!-- Added scope as best practice -->
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+
+        <!-- API Documentation -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.5.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
 
+        <!-- Utility & Mapping -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
@@ -103,28 +125,13 @@
             <version>1.5.5.Final</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-            <version>4.29.0</version>
-        </dependency>
+
+        <!-- Rate Limiting -->
         <dependency>
             <groupId>com.bucket4j</groupId>
             <artifactId>bucket4j-core</artifactId>
             <version>8.10.1</version>
         </dependency>
-
-
-        <!--        <dependency>-->
-<!--            <groupId>org.yaml</groupId>-->
-<!--            <artifactId>snakeyaml</artifactId>-->
-<!--            <version>1.27</version>-->
-<!--        </dependency>-->
     </dependencies>
 
     <build>

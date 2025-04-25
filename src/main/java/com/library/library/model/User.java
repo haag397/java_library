@@ -3,21 +3,26 @@ package com.library.library.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.*;
 
-@Entity(name = "AppUser")
+@Entity(name = "User")
 @Table(
-        name = "app_user",
+        name = "users",
         uniqueConstraints = {
                 @UniqueConstraint(name ="email_constraint",
                 columnNames = {"email"}),
@@ -29,15 +34,10 @@ import static jakarta.persistence.GenerationType.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AppUser implements UserDetails {
+@EntityListeners(AuditingEntityListener.class)
+public class User implements UserDetails {
     @Id
-    @SequenceGenerator(
-            name = "user_sequence",
-            sequenceName = "user_sequence",
-            allocationSize = 1)
-    @GeneratedValue(
-            generator = "user_sequence",
-            strategy = SEQUENCE)
+    @GeneratedValue(strategy = UUID)
     @Column(name = "id", nullable = false, updatable = false, unique = true)
     private Long id;
 
@@ -54,30 +54,44 @@ public class AppUser implements UserDetails {
     @Column(name = "email", nullable = false,length = 100,unique = true)
     private String email;
 
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
     @Column(name = "mobile", nullable = false,length = 50,unique = true)
     private String mobile;
 
     @Enumerated(STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "appUser")
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "user")
     private List<Book> books = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
+    private List<RefreshToken> refreshTokens = new ArrayList<>();
 
     @Override
     public String toString() {
-        return "AppUser{" +
+        return "User{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", createdAt=" + createdAt +
                 ", mobile='" + mobile + '\'' +
+                ", role=" + role +
+                ", updatedAt=" + updatedAt +
                 ", books=" + books +
                 '}';
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return List.of(new SimpleGrantedAuthority(role.name()));
         return List.of(new SimpleGrantedAuthority("ROLE_" + this.role.name()));
     }
 

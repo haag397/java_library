@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AppUserDTO {
+public class UserDTO {
     private Long id;
     @NotBlank
     private String firstName;
@@ -24,7 +24,5 @@ public class AppUserDTO {
     @NotBlank
     private String mobile;
     private String password;
-//    private Role role;
-//    private List<BookDTO> books;
 }
 

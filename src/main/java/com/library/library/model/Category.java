@@ -8,8 +8,8 @@ import java.util.List;
 
 import static jakarta.persistence.GenerationType.*;
 
-@Entity
-@Table
+@Entity(name = "Category")
+@Table(name = "category")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -30,7 +30,7 @@ public class Category {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(mappedBy = "category")
     private List<Book> books = new ArrayList<>();
 
 }
