@@ -34,7 +34,7 @@ public class Author {
     @Column(name = "last_name", nullable = false, length = 100)
     private String lastName;
 
-    @ManyToMany(mappedBy = "author")
+    @ManyToMany(mappedBy = "authors")
     private List<Book> books = new ArrayList<>();
 
     @Override

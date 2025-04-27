@@ -4,4 +4,4 @@ databaseChangeLog:
       author: you
       changes:
         - dropTable:
-            tableName: token
+            tableName: refresh_token

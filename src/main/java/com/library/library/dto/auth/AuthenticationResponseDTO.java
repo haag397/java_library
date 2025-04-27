@@ -10,4 +10,4 @@ public record AuthenticationResponseDTO (
         @JsonProperty("access_token")
         String accessToken,
         @JsonProperty("refresh_token")
-        UUID refreshToken){}
+        String refreshToken){}

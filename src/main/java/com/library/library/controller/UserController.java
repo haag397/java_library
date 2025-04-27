@@ -1,6 +1,7 @@
 package com.library.library.controller;
 
 //import com.library.library.dto.book.BookRequestDTO;
+import com.library.library.config.JwtService;
 import com.library.library.dto.user.UserMapper;
 import com.library.library.dto.user.UserCreationRequestDTO;
 import com.library.library.dto.user.UserResponseDTO;
@@ -27,6 +28,7 @@ public class UserController {
 
     private final UserService userService;
     private final UserMapper userMapper;
+    private final JwtService jwtService;
 
     @PostMapping(("/create"))
     public ResponseEntity<UserResponseDTO> addUser(@RequestBody UserCreationRequestDTO userCreationRequestDTO) {
@@ -52,6 +54,7 @@ public class UserController {
         return "testaaaaa";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/check-role")
     public String checkRole() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -59,6 +62,15 @@ public class UserController {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(", "));
         return "User roles: " + roles;
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/role")
+    public ResponseEntity<String> getRole(@RequestHeader("Authorization") String authHeader) {
+        System.out.println("aaaaaaaaaaaaaaaaaaaaa");
+        String token = authHeader.substring(7); // Remove "Bearer "
+        String role = jwtService.extractRole(token);
+        return ResponseEntity.ok(role);
     }
 
     @GetMapping("/print-authorities")
@@ -78,12 +90,12 @@ public class UserController {
         return "User roles: " + roles;
     }
 
-    @GetMapping("/email")
-    public ResponseEntity<UserResponseDTO>  findByEmail(@RequestParam String email) {
-        User user = userService.findByEmail(email).
-                orElseThrow(() -> new UserNotFoundException("user not found with email " + email));
-        UserResponseDTO responseDTO = userMapper.toUserResponseDTO(user);
-        return ResponseEntity.ok(responseDTO);
-    }
+//    @GetMapping("/email")
+//    public ResponseEntity<UserResponseDTO>  findByEmail(@RequestParam String email) {
+//        User user = userService.findByEmail(email).
+//                orElseThrow(() -> new UserNotFoundException("user not found with email " + email));
+//        UserResponseDTO responseDTO = userMapper.toUserResponseDTO(user);
+//        return ResponseEntity.ok(responseDTO);
+//    }
 
 }

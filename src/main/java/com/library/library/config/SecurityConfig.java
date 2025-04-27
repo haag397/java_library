@@ -30,28 +30,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                // disable csrf protection
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        // Allow public routes whitelist route
-                        .requestMatchers("/api/auth/register", "api/auth/authenticate").permitAll()
-                        // Protect other routes. Other routes need authentication
+                        .requestMatchers("/api/auth/register", "/api/auth/authenticate", "api/auth/a").permitAll()
                         .anyRequest().authenticated()
                 )
-                // Configures the application to be stateless. we want once per request filter and should not be stored session
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                /* run custom jwt filter jwtAuthenticationFilter before you run the built-in UsernamePasswordAuthenticationFilter
-                 Add filter before Spring's default filter
-                 */
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) //
                 .build();
     }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        //This is the default provider that retrieves user details from a database.
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        //load user by username
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;

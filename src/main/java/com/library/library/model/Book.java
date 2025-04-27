@@ -55,17 +55,18 @@ public class Book {
     @JoinTable(
             name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),
-            foreignKey = @ForeignKey(name = "author_id_fk"),
-            inverseJoinColumns = @JoinColumn(name = "author_id")
+            inverseJoinColumns = @JoinColumn(name = "author_id"),
+            foreignKey = @ForeignKey(name = "book_id_fk")
     )
     private List<Author> authors = new ArrayList<>();
 
     @ManyToMany()
     @JoinTable(
             name = "book_category",
-            joinColumns = @JoinColumn(name = "book_id"),
-            foreignKey = @ForeignKey(name = "category_id_fk"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
+            joinColumns = @JoinColumn(name = "book_id",
+                    foreignKey = @ForeignKey(name = "book_id_fk")),
+            inverseJoinColumns = @JoinColumn(name = "category_id",
+                    foreignKey = @ForeignKey(name = "category_id_fk"))
     )
     private List<Category> categories = new ArrayList<>();
 

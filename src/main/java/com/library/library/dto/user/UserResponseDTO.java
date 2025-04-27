@@ -4,6 +4,7 @@ package com.library.library.dto.user;
 import lombok.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -11,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class UserResponseDTO {
-    private Long id;
+    private UUID id;
     private String email;
     private String firstName;
     private String lastName;

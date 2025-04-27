@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -14,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class UserDTO {
-    private Long id;
+    private UUID id;
     @NotBlank
     private String firstName;
     @NotBlank

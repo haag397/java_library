@@ -12,9 +12,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.EnumType.STRING;
@@ -39,7 +41,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = UUID)
     @Column(name = "id", nullable = false, updatable = false, unique = true)
-    private Long id;
+    private UUID id;
 
     @Column(name = "first_name", nullable = false,length = 100)
     private String firstName;
@@ -58,6 +60,13 @@ public class User implements UserDetails {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @PrePersist
+    protected void onCreate() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now(ZoneId.of("Asia/Tehran"));
+        }
+    }
+
     @Column(name = "mobile", nullable = false,length = 50,unique = true)
     private String mobile;
 
@@ -68,11 +77,8 @@ public class User implements UserDetails {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "users")
     private List<Book> books = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
-    private List<RefreshToken> refreshTokens = new ArrayList<>();
 
     @Override
     public String toString() {
