@@ -1,7 +1,6 @@
-package com.library.library.config;
+package com.library.library.service.auth;
 
 import com.library.library.model.User;
-import com.library.library.service.auth.TokenBlacklistService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;

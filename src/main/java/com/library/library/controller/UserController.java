@@ -1,12 +1,10 @@
 package com.library.library.controller;
 
 //import com.library.library.dto.book.BookRequestDTO;
-import com.library.library.config.JwtService;
+import com.library.library.service.auth.JwtService;
 import com.library.library.dto.user.UserMapper;
 import com.library.library.dto.user.UserCreationRequestDTO;
 import com.library.library.dto.user.UserResponseDTO;
-import com.library.library.exception.UserNotFoundException;
-import com.library.library.model.User;
 import com.library.library.service.User.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

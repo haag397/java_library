@@ -1,0 +1,45 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/library
+    username: root
+    password: password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  liquibase:
+    enabled: false
+#    change-log: classpath:/db/changelog/db.changelog-master.yaml
+  cache:
+    type: redis
+  data:
+    redis:
+      host: localhost
+      port: 6380   # <== because redis in Docker is mapped 6380:6379 for local
+      timeout: 2000
+  minio:
+    url: http://localhost:9000
+    access-key: root
+    secret-key: password
+    bucket: mybucket
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.data.redis: DEBUG
+
+
+server:
+  port: 8080
+debug: true
+
+#springdoc:
+#  api-docs:
+#    path: /v3/api-docs
+#  swagger-ui:
+#    path: /swagger-ui.html
+#    enabled: true
+#    disable-swagger-default-url: true
+#  paths-to-match: /**

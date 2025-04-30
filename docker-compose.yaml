@@ -11,9 +11,7 @@ services:
     volumes:
       - db:/data/postgres
     ports:
-      - "5432:5432"
-    networks:
-      - backend
+      - "5433:5432"
     restart: unless-stopped
 
   redis:
@@ -21,9 +19,19 @@ services:
     container_name: redis
     ports:
       - "6380:6379"
-    networks:
-      - backend
     restart: unless-stopped
+
+  minio:
+    image: minio/minio:latest
+    ports:
+      - "9000:9000"   # MinIO server
+      - "9001:9001"   # MinIO console (web UI)
+    environment:
+      MINIO_ROOT_USER: root
+      MINIO_ROOT_PASSWORD: password
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio-data:/data
 
   app:
     build:
@@ -31,22 +39,20 @@ services:
       dockerfile: Dockerfile
     container_name: library
     ports:
-      - "8080:8080"
+      - "8081:8080"
     depends_on:
       - postgres
       - redis
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/library
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/library
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: password
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
-    networks:
-      - backend
     restart: unless-stopped
 
 volumes:
   db:
+  minio-data:
 
-networks:
-  backend:

@@ -46,4 +46,9 @@ public class UserService implements CreatableUserService {
         return userRepository.findByEmail(email);
     }
 
+    @Override
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
 }

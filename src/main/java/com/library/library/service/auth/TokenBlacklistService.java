@@ -18,10 +18,9 @@ public class TokenBlacklistService {
         return prefix + token;
     }
 
-    // For access tokens (shorter-lived
-    public void blackListAccessToken(String token, long ttlSeconds) {
+    public void blackListAccessToken(String token, long ttlMilliSeconds) {
         String key = generateKey(ACCESS_BLACKLIST_PREFIX, token);
-        redisTemplate.opsForValue().set(key, "blacklisted", ttlSeconds, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(key, "blacklisted", ttlMilliSeconds, TimeUnit.MILLISECONDS);
     }
 
     public boolean isAccessTokenBlacklisted(String token) {
@@ -30,10 +29,9 @@ public class TokenBlacklistService {
         return Boolean.TRUE.equals(redisTemplate.hasKey(key));
     }
 
-    // For refresh tokens (longer-lived)
-    public void blackListRefreshToken(String token, long ttlSeconds) {
+    public void blackListRefreshToken(String token, long ttlMilliSeconds) {
         String key = generateKey(REFRESH_BLACKLIST_PREFIX, token);
-        redisTemplate.opsForValue().set(key, "blacklisted", ttlSeconds, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(key, "blacklisted", ttlMilliSeconds, TimeUnit.MILLISECONDS);
     }
 
     public boolean isRefreshTokenBlacklisted(String token) {
@@ -42,18 +40,16 @@ public class TokenBlacklistService {
     }
 
     public void blackListAllUserToken(String userId, String accessToken, String refreshToken,
-                                      long accessTtlSeconds, long refreshTtlSeconds) {
-        blackListAccessToken(accessToken, accessTtlSeconds);
-        blackListRefreshToken(refreshToken, refreshTtlSeconds);
+                                      long accessTtlMilliSeconds, long refreshTtlMilliSeconds) {
+        blackListAccessToken(accessToken, accessTtlMilliSeconds);
+        blackListRefreshToken(refreshToken, refreshTtlMilliSeconds);
 
         String accessUserKey = "user:tokens:access:" + userId + ":" + accessToken;
         String refreshUserKey = "user:tokens:refresh:" + userId + ":" + refreshToken;
 
-        redisTemplate.opsForValue().set(accessUserKey, accessToken, accessTtlSeconds, TimeUnit.SECONDS);
-        redisTemplate.opsForValue().set(refreshUserKey, refreshToken, refreshTtlSeconds, TimeUnit.SECONDS);
-
+        redisTemplate.opsForValue().set(accessUserKey, accessToken, accessTtlMilliSeconds, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForValue().set(refreshUserKey, refreshToken, refreshTtlMilliSeconds, TimeUnit.MILLISECONDS);
     }
-
 }
 
 

@@ -1,55 +1,13 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://db:5432/library
-    username: root
-    password: password
-    driver-class-name: org.postgresql.Driver
+  profiles:
+    active: dev
 
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-  liquibase:
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
     enabled: true
-    change-log: classpath:/db/changelog/db.changelog-master.yaml
-#    default-schema:
-  #    enabled: false
-  cache:
-    type: redis
-  data:
-    redis:
-      host: localhost
-      port: 6379
-      timeout: 2000
-
-  #    change-log: classpath:/db/changelog/db.changelog-master.yaml
-#    default-schema: liquibase_db
-  #    properties:
-#      hibernate:
-#        format_sql: true
-
-  #  security:
-#    oauth2:
-#      resource server:
-#        jwt:
-#          audiences:
-
-
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health , info, mappings, beans
-  info:
-    env:
-      enabled: true
-
-logging:
-  level:
-    org.springframework.security: DEBUG
-server:
-  port: 8080
-debug: true
-
-
+    disable-swagger-default-url: true
+  paths-to-match: /**
+#  packages-to-scan: com.library.library.controller

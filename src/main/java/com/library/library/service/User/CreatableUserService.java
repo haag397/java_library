@@ -10,5 +10,6 @@ public interface CreatableUserService {
     UserResponseDTO createUser(UserCreationRequestDTO userCreationRequestDTO);
 //    Optional<AppUser> findByUserName(String userName);
     Optional<User> findByEmail(String email);
+    boolean existsByEmail(String email);
 
 }
