@@ -1,54 +1,62 @@
 package com.library.library.service.User;
 
+import com.library.library.dto.auth.RegisterRequestDTO;
 import com.library.library.dto.user.UserMapper;
 import com.library.library.dto.user.UserCreationRequestDTO;
 import com.library.library.dto.user.UserResponseDTO;
+import com.library.library.dto.user.UserUpdateRequestDTO;
+import com.library.library.exception.UserNotFoundException;
 import com.library.library.model.User;
 import com.library.library.repository.UserRepository;
 
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
 @Service
+@RequiredArgsConstructor
 public class UserService implements CreatableUserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-    }
-
-    public List<User> getAllUsers(){
-        return userRepository.findAll();
+    @Override
+    @Cacheable(value = "userCache", key = "'user_' + #id")
+    public UserResponseDTO findById(UUID id) {
+        User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+        return userMapper.toUserResponseDTO(user);
     }
 
     @Override
-    @Transactional
-    public UserResponseDTO createUser(UserCreationRequestDTO userCreationRequestDTO) {
-        User appUser= userMapper.toEntity(userCreationRequestDTO);
-        User savedUser = userRepository.save(appUser);        // Save entity
-        return userMapper.toUserResponseDTO(savedUser);
-//        appUserRepository.save(users);
-    }
-
-
-//    @Override
-//    public Optional<AppUser> findByUserName(String userName) {
-//        return appUserRepository.findByUserName(userName);
-//    }
-
-    @Override
-    public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public List<UserResponseDTO> findAll() {
+        return userRepository.findAll().stream().map(userMapper::toUserResponseDTO).collect(Collectors.toList());
     }
 
     @Override
-    public boolean existsByEmail(String email) {
-        return userRepository.existsByEmail(email);
+    public UserResponseDTO updateUser(UUID id, UserUpdateRequestDTO userUpdateRequestDTO) {
+        User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+
+        userUpdateRequestDTO.email().ifPresent(user::setEmail);
+        userUpdateRequestDTO.firstName().ifPresent(user::setFirstName);
+        userUpdateRequestDTO.lastName().ifPresent(user::setLastName);
+        userUpdateRequestDTO.mobile().ifPresent(user::setMobile);
+        userUpdateRequestDTO.password().ifPresent(user::setPassword);
+        userUpdateRequestDTO.role().ifPresent(user::setRole);
+
+        userRepository.save(user);
+        return userMapper.toUserResponseDTO(user);
     }
 
+    @Override
+    public void deleteUser(UUID id) {
+        User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+        userRepository.delete(user);
+    }
 }

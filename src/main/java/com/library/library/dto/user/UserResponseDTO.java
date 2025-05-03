@@ -1,6 +1,7 @@
 package com.library.library.dto.user;
 
 //import com.library.library.dto.book.BookResponseDTO;
+import com.library.library.model.Role;
 import lombok.*;
 
 import java.util.List;
@@ -17,5 +18,6 @@ public class UserResponseDTO {
     private String firstName;
     private String lastName;
     private String mobile;
+    private Role role;
 //    private List<BookResponseDTO> books;
 }

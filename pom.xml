@@ -83,6 +83,13 @@
             <version>4.29.0</version>
         </dependency>
 
+        <!-- Store analytics logs in ClickHouse -->
+<!--        <dependency>-->
+<!--            <groupId>com.clickhouse</groupId>-->
+<!--            <artifactId>clickhouse-jdbc</artifactId>-->
+<!--            <version>0.7.0</version>-->
+<!--        </dependency>-->
+
         <!-- Security (JWT) -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -137,7 +144,13 @@
         <!-- Spring Data Redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+            <version>3.4.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>3.4.5</version>
         </dependency>
 
         <!-- MINIO -->

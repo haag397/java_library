@@ -2,6 +2,7 @@ package com.library.library.dto.user;
 
 import com.library.library.model.User;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 
 
 @Mapper(componentModel = "spring")
@@ -11,4 +12,5 @@ public interface UserMapper {
 
     //request dto to entity for saving db
     User toEntity(UserCreationRequestDTO userCreationRequestDTO);
+
 }
