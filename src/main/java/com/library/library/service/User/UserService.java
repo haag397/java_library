@@ -1,22 +1,17 @@
 package com.library.library.service.User;
 
-import com.library.library.dto.auth.RegisterRequestDTO;
 import com.library.library.dto.user.UserMapper;
-import com.library.library.dto.user.UserCreationRequestDTO;
 import com.library.library.dto.user.UserResponseDTO;
-import com.library.library.dto.user.UserUpdateRequestDTO;
+import com.library.library.dto.user.UserRequestDTO;
 import com.library.library.exception.UserNotFoundException;
 import com.library.library.model.User;
 import com.library.library.repository.UserRepository;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -40,15 +35,14 @@ public class UserService implements CreatableUserService {
     }
 
     @Override
-    public UserResponseDTO updateUser(UUID id, UserUpdateRequestDTO userUpdateRequestDTO) {
+    public UserResponseDTO updateUser(UUID id, UserRequestDTO userRequestDTO) {
         User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
-
-        userUpdateRequestDTO.email().ifPresent(user::setEmail);
-        userUpdateRequestDTO.firstName().ifPresent(user::setFirstName);
-        userUpdateRequestDTO.lastName().ifPresent(user::setLastName);
-        userUpdateRequestDTO.mobile().ifPresent(user::setMobile);
-        userUpdateRequestDTO.password().ifPresent(user::setPassword);
-        userUpdateRequestDTO.role().ifPresent(user::setRole);
+        if (userRequestDTO.email() != null) user.setEmail(userRequestDTO.email());
+        if (userRequestDTO.firstName() != null) user.setFirstName(userRequestDTO.firstName());
+        if (userRequestDTO.lastName() != null) user.setLastName(userRequestDTO.lastName());
+        if (userRequestDTO.password() != null) user.setPassword(userRequestDTO.password());
+        if (userRequestDTO.role() != null) user.setRole(userRequestDTO.role());
+        if(userRequestDTO.mobile() != null) user.setMobile(userRequestDTO.mobile());
 
         userRepository.save(user);
         return userMapper.toUserResponseDTO(user);

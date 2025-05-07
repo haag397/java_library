@@ -11,3 +11,7 @@ springdoc:
     disable-swagger-default-url: true
   paths-to-match: /**
 #  packages-to-scan: com.library.library.controller
+
+axon:
+  axonserver:
+    servers: localhost:8124

@@ -1,6 +1,6 @@
 package com.library.library.controller;
 
-import com.library.library.dto.user.UserUpdateRequestDTO;
+import com.library.library.dto.user.UserRequestDTO;
 import com.library.library.exception.UserExistException;
 import com.library.library.exception.UserNotFoundException;
 import com.library.library.model.User;
@@ -78,9 +78,9 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<UserResponseDTO> updateUser(
             @RequestParam("id") UUID id,
-            @RequestBody @Valid UserUpdateRequestDTO userUpdateRequestDTO) {
+            @RequestBody @Valid UserRequestDTO userRequestDTO) {
 
-        UserResponseDTO updatedUser = userService.updateUser(id, userUpdateRequestDTO);
+        UserResponseDTO updatedUser = userService.updateUser(id, userRequestDTO);
         return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
     }
 

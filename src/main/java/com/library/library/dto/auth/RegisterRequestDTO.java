@@ -12,17 +12,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequestDTO {
-    @NotBlank
-    private String firstName;
-    @NotBlank
-    private String lastName;
-    @NotBlank
-    @Email
-    private String email;
-    @NotBlank
-    private String password;
-    @NotBlank
-    private String mobile;
-    private Role role;
-}
+    public class RegisterRequestDTO {
+        @NotBlank
+        private String firstName;
+        @NotBlank
+        private String lastName;
+        @NotBlank
+        @Email
+        private String email;
+        @NotBlank
+        private String password;
+        @NotBlank
+        private String mobile;
+        private Role role;
+    }
