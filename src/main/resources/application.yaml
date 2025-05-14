@@ -1,6 +1,13 @@
 spring:
   profiles:
     active: dev
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
 
 springdoc:
   api-docs:
@@ -15,3 +22,8 @@ springdoc:
 axon:
   axonserver:
     servers: localhost:8124
+
+logging:
+  level:
+    org.hibernate.SQL: debug  # Only show when debug is enabled
+    org.hibernate.type: warn

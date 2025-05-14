@@ -1,7 +1,7 @@
 package com.library.library.controller;
 
 import com.library.library.dto.auth.*;
-import com.library.library.exception.BookNotFoundException;
+
 import com.library.library.exception.InvalidTokenException;
 import com.library.library.exception.UserExistException;
 import com.library.library.exception.UserNotFoundException;

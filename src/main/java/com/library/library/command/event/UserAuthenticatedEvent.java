@@ -1,19 +1,13 @@
 package com.library.library.command.event;
 
-import com.library.library.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.UUID;
-
 @Data
 @AllArgsConstructor
-public class UserRegisteredEvent {
+public class UserAuthenticatedEvent {
     private UUID userId;
-    private String firstName;
-    private String lastName;
     private String email;
     private String password;
-    private String mobile;
-    private Role role;
 }

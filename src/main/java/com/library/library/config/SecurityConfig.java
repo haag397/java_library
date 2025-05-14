@@ -42,6 +42,7 @@ public class SecurityConfig {
                                 "/v3/api-docs.yaml",
                                 "/webjars/**",
                                 "/api/auth/register",
+                                "/api/event/*",
                                 "/api/auth/authenticate")
                         .permitAll()
                         .anyRequest().authenticated()

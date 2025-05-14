@@ -11,9 +11,9 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeleteUserCommand{
-        @TargetAggregateIdentifier
-        private UUID userId;
+public class AuthenticateUserCommand {
+    @TargetAggregateIdentifier
+    private UUID userId;
+    private String email;
+    private String password;
 }
-
-

@@ -3,6 +3,7 @@ package com.library.library.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -39,6 +40,7 @@ import static jakarta.persistence.GenerationType.*;
 @EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails {
     @Id
+//    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false, updatable = false, unique = true)
     private UUID id;
 
@@ -54,6 +56,9 @@ public class User implements UserDetails {
 
     @Column(name = "email", nullable = false,length = 100,unique = true)
     private String email;
+
+    @Column(name = "deleted", nullable = false, columnDefinition = "boolean default false")
+    private boolean deleted = false;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -92,6 +97,7 @@ public class User implements UserDetails {
                 ", role=" + role +
                 ", updatedAt=" + updatedAt +
                 ", books=" + books +
+                ", deleted=" + deleted +
                 '}';
     }
 

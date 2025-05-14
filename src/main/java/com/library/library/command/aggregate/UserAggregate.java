@@ -1,8 +1,10 @@
 package com.library.library.command.aggregate;
 
+import com.library.library.command.AuthenticateUserCommand;
 import com.library.library.command.DeleteUserCommand;
 import com.library.library.command.RegisterUserCommand;
 import com.library.library.command.UpdateUserCommand;
+import com.library.library.command.event.UserAuthenticatedEvent;
 import com.library.library.command.event.UserDeletedEvent;
 import com.library.library.command.event.UserRegisteredEvent;
 import com.library.library.command.event.UserUpdatedEvent;
@@ -25,6 +27,7 @@ public class UserAggregate {
     private Role role;
     private String mobile;
     private String lastName;
+    private String password;
 
     private boolean deleted = false;
 
@@ -33,36 +36,53 @@ public class UserAggregate {
     @CommandHandler
     public UserAggregate(RegisterUserCommand registerUserCommand) {
         apply(new UserRegisteredEvent(
-                registerUserCommand.userId(),
-                registerUserCommand.firstName(),
-                registerUserCommand.lastName(),
-                registerUserCommand.email(),
-                registerUserCommand.password(),
-                registerUserCommand.mobile(),
-                registerUserCommand.role()
+                registerUserCommand.getUserId(),
+                registerUserCommand.getFirstName(),
+                registerUserCommand.getLastName(),
+                registerUserCommand.getEmail(),
+                registerUserCommand.getPassword(),
+                registerUserCommand.getMobile(),
+                registerUserCommand.getRole()
         ));
     }
 
     @EventSourcingHandler
     public void on(UserRegisteredEvent userRegisteredEvent) {
         this.userId = userRegisteredEvent.getUserId();
-        this.email = userRegisteredEvent.getEmail();
         this.firstName = userRegisteredEvent.getFirstName();
         this.lastName = userRegisteredEvent.getLastName();
-        this.role = userRegisteredEvent.getRole();
+        this.email = userRegisteredEvent.getEmail();
+        this.password = userRegisteredEvent.getPassword();
         this.mobile = userRegisteredEvent.getMobile();
+        this.role = userRegisteredEvent.getRole();
+    }
+
+    @CommandHandler
+    public void handle(AuthenticateUserCommand authenticateUserCommand) {
+        apply(new UserAuthenticatedEvent(
+                authenticateUserCommand.getUserId(),
+                authenticateUserCommand.getEmail(),
+                authenticateUserCommand.getPassword()
+        ));
+    }
+
+    @EventSourcingHandler
+    public void on(UserAuthenticatedEvent userAuthenticatedEvent) {
+        this.userId = userAuthenticatedEvent.getUserId();
+        this.email = userAuthenticatedEvent.getEmail();
+        this.password = userAuthenticatedEvent.getPassword();
     }
 
     @CommandHandler
     public void handle(UpdateUserCommand updateUserCommand) {
         apply(new UserUpdatedEvent(
-                updateUserCommand.userId(),
-                updateUserCommand.firstName(),
-                updateUserCommand.lastName(),
-                updateUserCommand.password(),
-                updateUserCommand.email(),
-                updateUserCommand.mobile(),
-                updateUserCommand.role()
+                updateUserCommand.getUserId(),
+                updateUserCommand.getFirstName(),
+                updateUserCommand.getLastName(),
+                updateUserCommand.getEmail(),
+                updateUserCommand.getPassword(),
+                updateUserCommand.getMobile(),
+                updateUserCommand.getRole()
         ));
     }
 
@@ -80,7 +100,7 @@ public class UserAggregate {
         if (deleted) {
             throw new IllegalStateException("User already deleted");
         }
-        apply(new UserDeletedEvent(deleteUserCommand.userId()));
+        apply(new UserDeletedEvent(deleteUserCommand.getUserId()));
     }
 
     @EventSourcingHandler

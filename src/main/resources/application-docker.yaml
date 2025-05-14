@@ -4,13 +4,6 @@ spring:
     username: root
     password: password
     driver-class-name: org.postgresql.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-  liquibase:
-    enabled: false
-  #    change-log: classpath:/db/changelog/db.changelog-master.yaml
   cache:
     type: redis
   data:

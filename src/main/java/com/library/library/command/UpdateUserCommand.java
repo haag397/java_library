@@ -1,17 +1,24 @@
 package com.library.library.command;
 
 import com.library.library.model.Role;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 import java.util.UUID;
+@Data
 @Builder
-public record UpdateUserCommand(
+@NoArgsConstructor
+@AllArgsConstructor
+public class UpdateUserCommand {
         @TargetAggregateIdentifier
-        UUID userId,
-        String firstName,
-        String lastName,
-        String email,
-        String password,
-        String mobile,
-        Role role){}
+        private UUID userId;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String password;
+        private String mobile;
+        private Role role;
+}

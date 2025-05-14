@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-deleted-column-to-user
+      author: you
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: deleted
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
