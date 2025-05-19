@@ -6,8 +6,8 @@ spring:
       ddl-auto: update
     show-sql: false
   liquibase:
-    enabled: true
-    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    enabled:  false
+#    change-log: classpath:/db/changelog/db.changelog-master.yaml
 
 springdoc:
   api-docs:
@@ -18,12 +18,13 @@ springdoc:
     disable-swagger-default-url: true
   paths-to-match: /**
 #  packages-to-scan: com.library.library.controller
-
 axon:
   axonserver:
-    servers: localhost:8124
+    enabled: false
 
 logging:
   level:
-    org.hibernate.SQL: debug  # Only show when debug is enabled
-    org.hibernate.type: warn
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type: WARN
+    org.axonframework: DEBUG
+    org.hibernate.type.descriptor.sql: TRACE

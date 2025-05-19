@@ -4,10 +4,10 @@ import com.library.library.dto.auth.AuthenticationRequestDTO;
 import com.library.library.dto.auth.AuthenticationResponseDTO;
 import com.library.library.dto.auth.RegisterRequestDTO;
 import com.library.library.dto.auth.RegisterResponseDTO;
-import com.library.library.exception.UserExistException;
 import com.library.library.exception.UserNotFoundException;
 import com.library.library.repository.UsersRepository;
 import com.library.library.service.auth.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +24,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterResponseDTO> register(@RequestBody RegisterRequestDTO registerRequestDTO) {
+    public ResponseEntity<RegisterResponseDTO> register(@RequestBody @Valid RegisterRequestDTO registerRequestDTO) {
         return ResponseEntity.ok(authService.registers(registerRequestDTO));
     }
 

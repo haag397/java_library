@@ -14,6 +14,7 @@ import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
@@ -28,7 +29,7 @@ public class UserAggregate {
     private String mobile;
     private String lastName;
     private String password;
-
+    private LocalDateTime loginTime;
     private boolean deleted = false;
 
     public UserAggregate() {}
@@ -62,15 +63,14 @@ public class UserAggregate {
         apply(new UserAuthenticatedEvent(
                 authenticateUserCommand.getUserId(),
                 authenticateUserCommand.getEmail(),
-                authenticateUserCommand.getPassword()
-        ));
+                LocalDateTime.now()        ));
     }
 
     @EventSourcingHandler
     public void on(UserAuthenticatedEvent userAuthenticatedEvent) {
         this.userId = userAuthenticatedEvent.getUserId();
         this.email = userAuthenticatedEvent.getEmail();
-        this.password = userAuthenticatedEvent.getPassword();
+        this.loginTime = userAuthenticatedEvent.getLoginTime();
     }
 
     @CommandHandler

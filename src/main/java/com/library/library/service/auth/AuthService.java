@@ -35,10 +35,14 @@ public class AuthService {
     private final JwtService jwtService;
 
     public RegisterResponseDTO registers(RegisterRequestDTO registerRequestDTO) {
-        if (usersRepository.existsByEmail(registerRequestDTO.getEmail()) ||
-                usersRepository.existsByMobile(registerRequestDTO.getMobile())) {
+        if (usersRepository.existsByEmail(registerRequestDTO.getEmail())) {
             throw new UserExistException();
         }
+
+        if (usersRepository.existsByMobile(registerRequestDTO.getMobile())) {
+            throw new UserExistException();
+        }
+
             UUID userId = UUID.randomUUID();
             RegisterUserCommand command = RegisterUserCommand.builder()
                     .userId(userId)
@@ -61,29 +65,29 @@ public class AuthService {
                     .build();
     }
 
-    public AuthenticationResponseDTO auth(AuthenticationRequestDTO request) {
+        public AuthenticationResponseDTO auth(AuthenticationRequestDTO request) {
 
-        var user = usersRepository.findByEmail(request.getEmail())
-                .orElseThrow(UserNotFoundException::new);
+            var user = usersRepository.findByEmail(request.getEmail())
+                    .orElseThrow(UserNotFoundException::new);
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
-        );
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+            );
 
-        AuthenticateUserCommand command = new AuthenticateUserCommand(
-                user.getId(),
-                user.getEmail(),
-                request.getPassword()
-        );
+            AuthenticateUserCommand command = new AuthenticateUserCommand(
+                    user.getId(),
+                    user.getEmail(),
+                    request.getPassword()
+            );
 
-        commandGateway.sendAndWait(command); // Fire login event
+            commandGateway.sendAndWait(command); // Fire login event
 
-        String accessToken = jwtService.generateAccessToken(user);
-        String refreshToken = jwtService.generateRefreshToken(user);
+            String accessToken = jwtService.generateAccessToken(user);
+            String refreshToken = jwtService.generateRefreshToken(user);
 
-        return AuthenticationResponseDTO.builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .build();
-    }
+            return AuthenticationResponseDTO.builder()
+                    .accessToken(accessToken)
+                    .refreshToken(refreshToken)
+                    .build();
+        }
 }

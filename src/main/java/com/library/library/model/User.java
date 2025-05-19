@@ -27,10 +27,8 @@ import static jakarta.persistence.GenerationType.*;
 @Table(
         name = "users",
         uniqueConstraints = {
-                @UniqueConstraint(name ="email_constraint",
-                columnNames = {"email"}),
-                @UniqueConstraint(name = "unique_mobile",
-                columnNames = {"mobile"})
+                @UniqueConstraint(name ="email_constraint", columnNames = {"email"}),
+                @UniqueConstraint(name = "unique_mobile", columnNames = {"mobile"})
         })
 @Getter
 @Setter
@@ -63,6 +61,9 @@ public class User implements UserDetails {
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @Column(name = "login_time", nullable = true, updatable = true)
+    private LocalDateTime loginTime;
 
     @PrePersist
     protected void onCreate() {

@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-loginTime-column-to-user
+      author: you
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: login_time
+                  type: datetime
+                  constraints:
+                    nullable: true
