@@ -5,13 +5,6 @@ spring:
     password: password
     driver-class-name: org.postgresql.Driver
 
-#  clickhouse:
-#    datasource:
-#      url: jdbc:clickhouse://localhost:8123/default
-#      username: root
-#      password: pass
-#      driver-class-name: com.clickhouse.jdbc.ClickHouseDriver
-
   cache:
     type: redis
   data:
@@ -19,17 +12,10 @@ spring:
       host: localhost
       port: 6380   # <== because redis in Docker is mapped 6380:6379 for local
       timeout: 2000
-#  minio:
-#    url: http://localhost:9000
-#    access-key: root
-#    secret-key: password
-#    bucket: mybucket
-
 logging:
   level:
     org.springframework.security: DEBUG
     org.springframework.data.redis: DEBUG
-
 server:
   port: 8080
 debug: true

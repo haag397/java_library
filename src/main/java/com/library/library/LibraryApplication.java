@@ -1,6 +1,7 @@
 package com.library.library;
 
 
+import io.camunda.zeebe.spring.client.annotation.Deployment;
 import jakarta.persistence.EntityListeners;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableCaching
 @EnableJpaRepositories(basePackages = "com.library.library.repository")
 @SpringBootApplication
+//@Deployment(resources = "classpath:demoProcess.bpmn")
 public class LibraryApplication {
 
     public static void main(String[] args) {

@@ -2,6 +2,7 @@ package com.library.library.query.projection;
 
 import com.library.library.command.event.UserAuthenticatedEvent;
 import com.library.library.command.event.UserRegisteredEvent;
+import com.library.library.exception.UserExistException;
 import com.library.library.model.User;
 import com.library.library.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +47,7 @@ public class UserProjection {
     @EventHandler
     public void on(UserAuthenticatedEvent event) {
         User user = usersRepository.findById(event.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found in projection"));
+                .orElseThrow(UserExistException::new);
 
         user.setLoginTime(event.getLoginTime());
         usersRepository.save(user);
