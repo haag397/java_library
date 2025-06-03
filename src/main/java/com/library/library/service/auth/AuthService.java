@@ -8,6 +8,7 @@ import com.library.library.dto.auth.RegisterRequestDTO;
 import com.library.library.dto.auth.RegisterResponseDTO;
 import com.library.library.exception.UserExistException;
 import com.library.library.exception.UserNotFoundException;
+import com.library.library.model.User;
 import com.library.library.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -34,7 +35,7 @@ public class AuthService {
     private final TokenBlacklistService tokenBlacklistService;
     private final JwtService jwtService;
 
-    public RegisterResponseDTO registers(RegisterRequestDTO registerRequestDTO) {
+        public RegisterResponseDTO registers(RegisterRequestDTO registerRequestDTO) {
         if (usersRepository.existsByEmail(registerRequestDTO.getEmail())) {
             throw new UserExistException();
         }

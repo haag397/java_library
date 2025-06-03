@@ -33,21 +33,12 @@ camunda:
       # Remove space in base-url and use correct protocol
 #      base-url: http://zeebe:8080
 #      grpc-address: zeebe:26500
-      grpc-address: http://127.0.0.1:26500
+      grpc-address: zeebe:26500
       # Use zeebe container name instead of localhost
 #      rest-address: http://zeebe:8080
       rest-address: http://127.0.0.1:8080
-      # Authentication configuration to match docker-compose
-#      auth:
-#        client-id: ${ZEEBE_CLIENT_ID}
-#        client-secret: ${ZEEBE_CLIENT_SECRET}
-#        token-url: http://keycloak:18080/auth/realms/camunda-platform/protocol/openid-connect/token
-#        audience: zeebe-api
-#        credentials-cache-path: /tmp/zeebe_auth_cache
+#      execution-threads: 2
 
-#identity:
-#  base-url: http://identity:8084
-#  issuer-url: http://keycloak:18080/auth/realms/camunda-platform
 
 
 logging:

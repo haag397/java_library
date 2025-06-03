@@ -38,7 +38,6 @@ import static jakarta.persistence.GenerationType.*;
 @EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails {
     @Id
-//    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false, updatable = false, unique = true)
     private UUID id;
 
