@@ -23,25 +23,26 @@ public class UserProjection {
     @EventHandler
     @Transactional
     public void on(UserRegisteredEvent evt) {
-       if (usersRepository.existsByEmail(evt.getEmail())) {
-            log.warn("Duplicate email found: {}", evt.getEmail());
+
+        if (usersRepository.existsByEmail(evt.getEmail())) {
+            log.warn("Skipping duplicate projection for user with email: {}", evt.getEmail());
             return;
         }
-        User u = User.builder()
-                .id(evt.getUserId())
-                .firstName(evt.getFirstName())
-                .lastName(evt.getLastName())
-                .email(evt.getEmail())
-                .password(evt.getPassword())
-                .mobile(evt.getMobile())
-                .role(evt.getRole())
-                .build();
+
         try {
+            User u = User.builder()
+                    .id(evt.getUserId())
+                    .firstName(evt.getFirstName())
+                    .lastName(evt.getLastName())
+                    .email(evt.getEmail())
+                    .password(evt.getPassword())
+                    .mobile(evt.getMobile())
+                    .role(evt.getRole())
+                    .build();
             usersRepository.saveAndFlush(u);
         } catch (Exception ex) {
             // Likely a unique constraint on email; log and skip to avoid breaking projection
-            log.warn("Duplicate user registration attempt for email: ", ex);
-        }
+            log.error("Projection save failed: {}", ex.getMessage());        }
     }
 
     @EventHandler

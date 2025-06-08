@@ -27,6 +27,7 @@ public class RegisterUserWorker {
     private final CommandGateway commandGateway;
     private final PasswordEncoder passwordEncoder;
     private final AuthService authService;
+    private final UsersRepository usersRepository;
 
     @JobWorker(type = "registration")
     public void handleJob(
@@ -40,6 +41,18 @@ public class RegisterUserWorker {
             @Variable String role
     ) {
         try {
+
+            if (usersRepository.existsByEmail(email) || usersRepository.existsByMobile(mobile)) {
+                client.newCompleteCommand(job.getKey())
+                        .variables(Map.of(
+                                "status", "error",
+                                "errorCode", "USER_ALREADY_EXISTS",
+                                "message", "User with this email already exists."
+                        ))
+                        .send()
+                        .join();
+                throw new UserExistException();
+            }
 
             UUID userId = UUID.randomUUID();
             RegisterUserCommand command = RegisterUserCommand.builder()

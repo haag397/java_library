@@ -1,6 +1,7 @@
 package com.library.library.controller;
 
 import com.library.library.dto.auth.*;
+import com.library.library.exception.UserExistException;
 import com.library.library.exception.UserNotFoundException;
 import com.library.library.repository.UsersRepository;
 import com.library.library.service.auth.AuthService;
@@ -50,7 +51,11 @@ public class AuthController {
     }
 
     @PostMapping("/start-registration")
-    public ResponseEntity<Void> startRegistration(@RequestBody RegisterRequestDTO dto) {
+    public ResponseEntity<Map<String, Object>>  startRegistration(@RequestBody RegisterRequestDTO dto) {
+        if (usersRepository.existsByEmail(dto.getEmail()) || usersRepository.existsByMobile(dto.getMobile())) {
+            throw new UserExistException();
+        }
+
         Map<String, Object> variables = Map.of(
                 "firstName", dto.getFirstName(),
                 "lastName", dto.getLastName(),
@@ -59,80 +64,58 @@ public class AuthController {
                 "password", dto.getPassword(),
                 "role", dto.getRole().name()
         );
-        zeebeClient.newCreateInstanceCommand()
+        ProcessInstanceResult result = zeebeClient.newCreateInstanceCommand()
                 .bpmnProcessId("user-register")
                 .latestVersion()
                 .variables(variables)
+                .withResult() // <--- Wait for process completion
                 .send()
                 .join();
-        return ResponseEntity.ok().build();
+
+        String status = (String) result.getVariablesAsMap().get("status");
+
+        if (!"completed".equals(status)) {
+            String errorCode = (String) result.getVariablesAsMap().get("errorCode");
+            String message = (String) result.getVariablesAsMap().get("message");
+            throw new UserExistException(); }
+
+        // Extract user info to return
+        Map<String, Object> response = Map.of(
+                "userId", result.getVariablesAsMap().get("userId"),
+                "email", result.getVariablesAsMap().get("email"),
+                "firstName", result.getVariablesAsMap().get("firstName"),
+                "lastName", result.getVariablesAsMap().get("lastName")
+        );
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/start-authentication")
-    public ResponseEntity<AuthResponse> authenticate(
-            @Valid @RequestBody AuthenticationRequestDTO request) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody AuthenticationRequestDTO dto) {
+        Map<String, Object> variables = Map.of(
+                "email", dto.getEmail(),
+                "password", dto.getPassword()
+        );
 
-        try {
-            log.info("Authentication request received for email: {}", request.getEmail());
-            ProcessInstanceEvent processInstance = zeebeClient
-                    .newCreateInstanceCommand()
-                    .bpmnProcessId("authentication-process")
-                    .latestVersion()
-                    .variables(Map.of(
-                            "email", request.getEmail(),
-                            "password", request.getPassword()
-                    ))
-                    .send()
-                    .join();
+        ProcessInstanceResult result = zeebeClient
+                .newCreateInstanceCommand()
+                .bpmnProcessId("authentication-process")  // BPMN ID of your auth process
+                .latestVersion()
+                .variables(variables)
+                .withResult()  // <--- This waits for process completion
+                .send()
+                .join();
 
-            log.info("Started authentication process with instance ID: {}",
-                    processInstance.getProcessInstanceKey());
-            CompletableFuture<Map<String, Object>> resultFuture = waitForProcessCompletion(
-                    processInstance.getProcessInstanceKey());
-
-            Map<String, Object> result = resultFuture.get(TIMEOUT.toSeconds(), TimeUnit.SECONDS);
-
-            String status = (String) result.get("status");
-
-            if ("SUCCESS".equals(status)) {
-                AuthResponse response = AuthResponse.builder()
-                        .accessToken((String) result.get("accessToken"))
-                        .refreshToken((String) result.get("refreshToken"))
-                        .userId((UUID) result.get("userId"))
-                        .email((String) result.get("email"))
-                        .build();
-
-                log.info("Authentication successful for user: {}", request.getEmail());
-                return ResponseEntity.ok(response);
-
-            } else {
-                String errorCode = (String) result.get("errorCode");
-                String errorMessage = (String) result.get("errorMessage");
-
-                log.error("Authentication failed for user: {} - {}", request.getEmail(), errorMessage);
-
-                return handleAuthenticationError(errorCode, errorMessage);
-            }
-
-        } catch (UserNotFoundException e) {
-            log.error("User not found: {}", e.getMessage());
-            throw new UserNotFoundException();
-
-        } catch (Exception e) {
-            log.error("Authentication failed for user: {} - {}", request.getEmail(), e.getMessage(), e);
-        }
-        return null;
-    }
-
-    private ResponseEntity<AuthResponse> handleAuthenticationError(String errorCode, String errorMessage) {
-        if (errorCode.equals("USER_NOT_FOUND")) {
+        String status = (String) result.getVariablesAsMap().get("status");
+        if (!"authenticated".equals(status)) {
             throw new UserNotFoundException();
         }
-        return null;
-    }
-    private CompletableFuture<Map<String, Object>> waitForProcessCompletion(long processInstanceKey) {
-        return CompletableFuture.supplyAsync(() -> {
-            throw new UnsupportedOperationException("Process completion monitoring not implemented");
-        });
+
+        String accessToken = (String) result.getVariablesAsMap().get("accessToken");
+        String refreshToken = (String) result.getVariablesAsMap().get("refreshToken");
+
+        return ResponseEntity.ok(Map.of(
+                "accessToken", accessToken,
+                "refreshToken", refreshToken
+        ));
     }
 }

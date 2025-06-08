@@ -48,9 +48,6 @@ public class AuthenticateUserWorker {
             );
 
             String accessToken = jwtService.generateAccessToken(user);
-            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-            System.out.println(accessToken);
-            System.out.println("////////////////////////////////");
             String refreshToken = jwtService.generateRefreshToken(user);
 
             client.newCompleteCommand(job.getKey())
