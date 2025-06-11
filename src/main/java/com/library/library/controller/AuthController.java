@@ -5,23 +5,14 @@ import com.library.library.exception.UserExistException;
 import com.library.library.exception.UserNotFoundException;
 import com.library.library.repository.UsersRepository;
 import com.library.library.service.auth.AuthService;
-import io.camunda.zeebe.client.api.command.ClientException;
-import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
 import io.camunda.zeebe.client.api.response.ProcessInstanceResult;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Duration;
 import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import io.camunda.zeebe.client.ZeebeClient;
 
@@ -35,7 +26,6 @@ public class AuthController {
     private final AuthService authService;
 
     private final ZeebeClient zeebeClient;
-    private static final Duration TIMEOUT = Duration.ofSeconds(30);
 
     @PostMapping("/register")
     public ResponseEntity<RegisterResponseDTO> register(@RequestBody @Valid RegisterRequestDTO registerRequestDTO) {
