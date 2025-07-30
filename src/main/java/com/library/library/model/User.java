@@ -12,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -73,6 +74,9 @@ public class User implements UserDetails {
 
     @Column(name = "mobile", nullable = false,length = 50,unique = true)
     private String mobile;
+
+    @Column(name = "wallet_balance", nullable = true)
+    private BigDecimal walletBalance = BigDecimal.ZERO;
 
     @Enumerated(STRING)
     private Role role;

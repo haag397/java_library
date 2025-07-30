@@ -43,7 +43,8 @@ public class SecurityConfig {
                                 "/webjars/**",
                                 "/api/auth/register",
                                 "/api/event/*",
-                                "/api/auth/authenticate")
+                                "/api/auth/authenticate",
+                                        "/api/process/start")
                         .permitAll()
                         .anyRequest().authenticated()
                 )
