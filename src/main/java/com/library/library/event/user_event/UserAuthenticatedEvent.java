@@ -1,4 +1,4 @@
-package com.library.library.command.event;
+package com.library.library.event.user_event;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

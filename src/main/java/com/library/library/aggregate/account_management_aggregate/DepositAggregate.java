@@ -1,8 +1,8 @@
-package com.library.library.command.aggregate;
+package com.library.library.aggregate.account_management_aggregate;
 
-import com.library.library.command.UpdateAccountCommand;
-import com.library.library.command.event.AccountUpdatedEvent;
-import com.library.library.dto.user.SignerInfoDto;
+import com.library.library.command.accountmangement.UpdateAccountCommand;
+import com.library.library.event.account_management_event.AccountUpdatedEvent;
+import com.library.library.dto.account_management_dto.SignerInfoDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;

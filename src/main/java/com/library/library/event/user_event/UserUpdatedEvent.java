@@ -1,4 +1,4 @@
-package com.library.library.command.event;
+package com.library.library.event.user_event;
 
 import com.library.library.model.Role;
 import lombok.AllArgsConstructor;

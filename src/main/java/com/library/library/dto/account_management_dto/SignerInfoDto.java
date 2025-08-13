@@ -1,4 +1,4 @@
-package com.library.library.dto.user;
+package com.library.library.dto.account_management_dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

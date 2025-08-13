@@ -1,7 +1,7 @@
 package com.library.library.query.projection;
 
-import com.library.library.command.event.AccountUpdatedEvent;
-import com.library.library.dto.user.UpdateAccountRequestDTO;
+import com.library.library.event.account_management_event.AccountUpdatedEvent;
+import com.library.library.dto.account_management_dto.UpdateDepositRequestDTO;
 import com.library.library.model.SignerInfo;
 import com.library.library.repository.DepositRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,6 @@ import org.axonframework.eventhandling.EventHandler;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @ProcessingGroup("deposit-projector")
@@ -28,7 +27,7 @@ public class DepositProjector {
         depositRepository.findById(event.getDepositId()).ifPresent(deposit -> {
 
             // Map the DTO data from the event to the JPA entity
-            UpdateAccountRequestDTO dto = event.getUpdatedAccountData();
+            UpdateDepositRequestDTO dto = event.getUpdatedAccountData();
             deposit.setDepositNumber(dto.getDepositNumber());
             deposit.setMainCustomerNumber(dto.getMainCustomerNumber());
             deposit.setDepositTitle(dto.getDepositTitle());

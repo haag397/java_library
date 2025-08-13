@@ -1,6 +1,6 @@
-package com.library.library.command.event;
+package com.library.library.event.account_management_event;
 
-import com.library.library.dto.user.UpdateAccountRequestDTO;
+import com.library.library.dto.account_management_dto.UpdateDepositRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,5 +14,5 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AccountUpdatedEvent {
     private UUID depositId;
-    private UpdateAccountRequestDTO updatedAccountData;
+    private UpdateDepositRequestDTO updatedAccountData;
 }

@@ -1,6 +1,6 @@
-package com.library.library.command;
+package com.library.library.command.accountmangement;
 
-import com.library.library.dto.user.UpdateAccountRequestDTO;
+import com.library.library.dto.account_management_dto.UpdateDepositRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,5 +16,5 @@ import java.util.UUID;
 public class UpdateAccountCommand {
     @TargetAggregateIdentifier
     private UUID depositId;
-    private UpdateAccountRequestDTO updateAccountRequest;
+    private UpdateDepositRequestDTO updateAccountRequest;
 }

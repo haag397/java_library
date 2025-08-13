@@ -1,13 +1,13 @@
-package com.library.library.command.aggregate;
+package com.library.library.aggregate.user_aggregate;
 
 import com.library.library.command.AuthenticateUserCommand;
 import com.library.library.command.DeleteUserCommand;
 import com.library.library.command.RegisterUserCommand;
 import com.library.library.command.UpdateUserCommand;
-import com.library.library.command.event.UserAuthenticatedEvent;
-import com.library.library.command.event.UserDeletedEvent;
-import com.library.library.command.event.UserRegisteredEvent;
-import com.library.library.command.event.UserUpdatedEvent;
+import com.library.library.event.user_event.UserAuthenticatedEvent;
+import com.library.library.event.user_event.UserDeletedEvent;
+import com.library.library.event.user_event.UserRegisteredEvent;
+import com.library.library.event.user_event.UserUpdatedEvent;
 import com.library.library.model.Role;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;

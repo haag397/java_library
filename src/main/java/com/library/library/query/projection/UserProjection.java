@@ -1,7 +1,7 @@
 package com.library.library.query.projection;
 
-import com.library.library.command.event.UserAuthenticatedEvent;
-import com.library.library.command.event.UserRegisteredEvent;
+import com.library.library.event.user_event.UserAuthenticatedEvent;
+import com.library.library.event.user_event.UserRegisteredEvent;
 import com.library.library.exception.UserExistException;
 import com.library.library.model.User;
 import com.library.library.repository.UsersRepository;
@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 

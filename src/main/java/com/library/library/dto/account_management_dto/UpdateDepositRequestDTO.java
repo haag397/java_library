@@ -1,4 +1,4 @@
-package com.library.library.dto.user;
+package com.library.library.dto.account_management_dto;
 
 import lombok.*;
 
@@ -9,7 +9,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateAccountRequestDTO {
+public class UpdateDepositRequestDTO {
     private String depositNumber;
     private String mainCustomerNumber;
     private String depositTitle;
@@ -27,7 +27,7 @@ public class UpdateAccountRequestDTO {
     private Boolean isSpecial;
     private String fullName;
     private String individualOrSharedDeposit;
-    private String openingDate; // Consider a custom converter for LocalDate
+    private String openingDate;
     private List<SignerInfoDto> signerInfo;
     private Boolean isCommercialDeposit;
     private List<String> withdrawTools;
