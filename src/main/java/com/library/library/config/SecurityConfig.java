@@ -44,7 +44,10 @@ public class SecurityConfig {
                                 "/api/auth/register",
                                 "/api/event/*",
                                 "/api/auth/authenticate",
-                                        "/api/process/start")
+                                "/api/process/start",
+                                "/api/loans/**",
+                                "/deposits/**"
+                        )
                         .permitAll()
                         .anyRequest().authenticated()
                 )

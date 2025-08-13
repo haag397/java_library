@@ -108,4 +108,14 @@ public class AuthController {
                 "refreshToken", refreshToken
         ));
     }
+    @PostMapping("/cancel")
+    public ResponseEntity<String> cancelProcess(@RequestParam long processInstanceKey) {
+        zeebeClient.newPublishMessageCommand()
+                .messageName("cancel-request") // Must match message name in BPMN
+                .correlationKey("123")         // Must match a variable in the running process (e.g. "userId")
+                .send()
+                .join();
+
+        return ResponseEntity.ok("Cancel message sent.");
+    }
 }
