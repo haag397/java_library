@@ -207,6 +207,13 @@
             <version>3.0.0</version>
         </dependency>
 
+        <!-- Feign Client for communication -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>4.2.1</version>
+        </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>

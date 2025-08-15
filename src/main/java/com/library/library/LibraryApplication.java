@@ -6,6 +6,7 @@ import jakarta.persistence.EntityListeners;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
@@ -13,6 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableCaching
 @EnableJpaRepositories(basePackages = "com.library.library.repository")
 @SpringBootApplication
+@EnableFeignClients
 //@Deployment(resources = "classpath:demoProcess.bpmn")
 public class LibraryApplication {
 

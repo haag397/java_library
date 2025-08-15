@@ -1,8 +1,8 @@
 package com.library.library.aggregate.account_management_aggregate;
 
-import com.library.library.command.accountmangement.UpdateAccountCommand;
-import com.library.library.event.account_management_event.AccountUpdatedEvent;
+import com.library.library.command.accountmangement.UpdateDepositCommand;
 import com.library.library.dto.account_management_dto.SignerInfoDto;
+import com.library.library.event.account_management_event.DepositUpdatedEvent;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
@@ -15,6 +15,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 
 @Aggregate
 @Data
@@ -32,30 +34,22 @@ public class DepositAggregate {
     // This is where the business logic and validation should be.
     // In a real scenario, you'd check for business rules here before applying the event.
     @CommandHandler
-    public DepositAggregate(UpdateAccountCommand command) {
+    public DepositAggregate(UpdateDepositCommand cmd) {
         // Validation logic can go here (e.g., check if the user is authorized)
-        System.out.println("Processing UpdateAccountCommand for ID: " + command.getDepositId());
 
         // Publish the event to trigger state change and update the read model.
         // The event contains the new state of the account.
-        AggregateLifecycle.apply(AccountUpdatedEvent.builder()
-                .depositId(command.getDepositId())
-                .updatedAccountData(command.getUpdateAccountRequest())
-                .build());
+        apply(new DepositUpdatedEvent(cmd.getDepositId(), cmd.getUserId(), cmd.getPayload()));
+
     }
 
     // Event Sourcing Handler method to update the aggregate's state
     // This method is used to rebuild the aggregate's state from the event stream.
     @EventSourcingHandler
-    public void on(AccountUpdatedEvent event) {
-        System.out.println("Applying AccountUpdatedEvent for ID: " + event.getDepositId());
+    public void on(DepositUpdatedEvent  evt) {
 
         // Update the aggregate's state with the data from the event
-        this.depositId = event.getDepositId();
-        this.depositNumber = event.getUpdatedAccountData().getDepositNumber();
-        this.mainCustomerNumber = event.getUpdatedAccountData().getMainCustomerNumber();
-        this.availableAmount = event.getUpdatedAccountData().getAvailableAmount();
-        this.signerInfo = event.getUpdatedAccountData().getSignerInfo();
+        this.depositId = evt.getDepositId();
 
         // Other fields would be updated here as well
     }

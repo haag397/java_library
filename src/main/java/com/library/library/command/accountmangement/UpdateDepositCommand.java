@@ -1,5 +1,6 @@
 package com.library.library.command.accountmangement;
 
+import com.library.library.dto.account_management_dto.DepositSaveRequestDTO;
 import com.library.library.dto.account_management_dto.UpdateDepositRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,8 +14,9 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateAccountCommand {
+public class UpdateDepositCommand  {
     @TargetAggregateIdentifier
-    private UUID depositId;
-    private UpdateDepositRequestDTO updateAccountRequest;
+    UUID depositId;
+    String userId;
+    DepositSaveRequestDTO payload;
 }
