@@ -27,5 +27,6 @@ public class RejectLoanWorker {
         commandGateway.send(new RejectLoanCommand(loanId, "Credit score too low"));
 
         client.newCompleteCommand(job.getKey()).send().join();
+
     }
 }

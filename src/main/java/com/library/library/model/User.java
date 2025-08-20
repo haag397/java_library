@@ -78,6 +78,8 @@ public class User implements UserDetails {
     @Column(name = "wallet_balance", nullable = true)
     private BigDecimal walletBalance = BigDecimal.ZERO;
 
+
+
     @Enumerated(STRING)
     private Role role;
 

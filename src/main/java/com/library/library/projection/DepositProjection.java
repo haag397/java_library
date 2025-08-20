@@ -1,4 +1,4 @@
-package com.library.library.query.projection;
+package com.library.library.projection;
 
 import com.library.library.dto.account_management_dto.DepositMapper;
 import com.library.library.dto.account_management_dto.DepositSaveRequestDTO;

@@ -48,7 +48,7 @@ public class Deposit {
     @Column(name = "portion")
     private String portion;
     @Column(name = "is_specia;")
-    private String isSpecial;
+    private Boolean isSpecial;
     @Column(name = "full_name")
     private String fullName;
     @Column(name = "individual_or_shared_deposit")

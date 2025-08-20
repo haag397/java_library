@@ -1,4 +1,4 @@
-package com.library.library.query.projection;
+package com.library.library.projection;
 
 import com.library.library.event.user_event.UserAuthenticatedEvent;
 import com.library.library.event.user_event.UserRegisteredEvent;

@@ -35,6 +35,12 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
+                                "/user-task/**",
+                                "/verify-otp",
+                                "/start-authentication",
+                                "/api/**",
+                                "/api/result/",
+                                "/api/signal",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/swagger-resources/**",
@@ -46,7 +52,14 @@ public class SecurityConfig {
                                 "/api/auth/authenticate",
                                 "/api/process/start",
                                 "/api/loans/**",
-                                "/deposits/**"
+                                "api/validate",
+                                "/deposits/**",
+                                "/flow/stream/**",
+                                "/loan/**",
+                                "/loan/message/",
+                                "/user-task/deploy-form",
+                                "/start-process/**",
+                                "/response/**"
                         )
                         .permitAll()
                         .anyRequest().authenticated()

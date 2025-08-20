@@ -16,6 +16,11 @@ logging:
   level:
     org.springframework.security: DEBUG
     org.springframework.data.redis: DEBUG
+core:
+  deposit:
+    url: http://localhost:9090  # mock service URL
+
+
 server:
   port: 8080
 debug: true

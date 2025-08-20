@@ -29,6 +29,13 @@ camunda:
       enabled: true
       grpc-address: http://192.168.179.20:26500
       rest-address: http://192.168.179.20:8080
+#    operate:
+#      client:
+#        base-url: http://192.168.179.20:8081
+#        auth:
+#          enabled: true
+#          username: demo
+#          password: demo
 
 logging:
   level:

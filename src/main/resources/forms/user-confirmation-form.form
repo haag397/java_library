@@ -1,0 +1,18 @@
+{
+  "id": "user-confirmation-form",
+  "components": [
+    {
+      "id": "confirmed",
+      "label": "تأیید قوانین",
+      "type": "boolean",
+      "key": "confirmed"
+    },
+    {
+      "id": "details",
+      "label": "جزئیات اضافی",
+      "type": "text",
+      "key": "details"
+    }
+  ],
+  "type": "default"
+}
